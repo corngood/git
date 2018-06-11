@@ -950,6 +950,8 @@ void *xmmap_gently(void *start, size_t length,
 	void *ret;
 
 	mmap_limit_check(length);
+  if (prot == PROT_READ && flags == MAP_PRIVATE)
+    flags = MAP_SHARED;
 	ret = mmap(start, length, prot, flags, fd, offset);
 	if (ret == MAP_FAILED && !length)
 		ret = NULL;
